@@ -11,5 +11,13 @@ export default defineNuxtConfig({
 
   sanctum: {
     baseUrl: 'http://nuxt_backend.test:80', // Laravel API
-},
+  },
+  css: ['~/assets/css/main.css'],
+
+  postcss: {
+    plugins: {
+      tailwindcss: {},
+      autoprefixer: {},
+    },
+  },
 })

@@ -11,6 +11,10 @@ export default defineNuxtConfig({
 
   sanctum: {
     baseUrl: 'http://nuxt_backend.test:80', // Laravel API
+    redirect: {
+      onAuthOnly: 'auth/login',
+      onGuestOnly: "dashboard",
+    }
   },
   css: ['~/assets/css/main.css'],
 

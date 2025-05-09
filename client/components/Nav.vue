@@ -1,5 +1,7 @@
 <script setup lang="ts">
-const { user, isAuthenticated } = useSanctumAuth();
+const { isAuthenticated } = useSanctumAuth();
+const user = useSanctumUser<User>();
+
 </script>
 <template>
   <header class="bg-white">
@@ -42,9 +44,10 @@ const { user, isAuthenticated } = useSanctumAuth();
         </button>
       </div>
       <div class="hidden lg:flex">
-        <div class="flex items-center space-x-6">
+        <div class="flex items-center space-x-6"
+          v-if="isAuthenticated" >
           <div
-            v-if="isAuthenticated"
+          
             class="text-sm font-semibold leading-6 text-gray-900"
           >
             {{ user.name }}

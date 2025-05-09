@@ -3,21 +3,23 @@
     middleware: ["sanctum:guest"],
     title: "Register",
   })
-  const sanctumFetch = useSanctumClient();
 
-const form = reactive<RegisterForm>({
-  name: "",
-  email: "",
-  password: "",
-  password_confirmation: "",
-});
+  const {register: registerAction} = useAuth();
+  const {refreshIdentity} = useSanctumAuth();
+  
+  const form = reactive<RegisterForm>({
+    name: "",
+    email: "",
+    password: "",
+    password_confirmation: "",
+  });
 
-const register = async () => {
-   await sanctumFetch("/register", {
-    method: "POST",
-    body: form,
-   });
-};
+  const register = async () => {
+    await registerAction(form);
+    await refreshIdentity();
+    await navigateTo("/dashboard");
+  };
+
 </script>
 
 <template>

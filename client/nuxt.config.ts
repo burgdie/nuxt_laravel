@@ -14,6 +14,7 @@ export default defineNuxtConfig({
     redirect: {
       onAuthOnly: 'auth/login',
       onGuestOnly: "dashboard",
+      onLogout: "auth/login"
     }
   },
   css: ['~/assets/css/main.css'],
@@ -22,6 +23,7 @@ export default defineNuxtConfig({
     plugins: {
       tailwindcss: {},
       autoprefixer: {},
+
     },
   },
 })

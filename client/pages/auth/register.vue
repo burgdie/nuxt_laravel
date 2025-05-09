@@ -1,18 +1,22 @@
 <script setup lang="ts">
   definePageMeta({
     middleware: ["sanctum:guest"],
-    title: "Login",
+    title: "Register",
   })
+  const sanctumFetch = useSanctumClient();
 
-
-const { login: loginAction } = useSanctumAuth();
-const form = reactive<LoginForm>({
-  email: "admin@admin.com",
-  password: "password",
+const form = reactive<RegisterForm>({
+  name: "",
+  email: "",
+  password: "",
+  password_confirmation: "",
 });
 
-const login = async () => {
-  await loginAction(form);
+const register = async () => {
+   await sanctumFetch("/register", {
+    method: "POST",
+    body: form,
+   });
 };
 </script>
 
@@ -22,11 +26,33 @@ const login = async () => {
       <h2
         class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900"
       >
-        Log in
+        Register
       </h2>
     </div>
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-      <form class="space-y-6" @submit.prevent="login">
+      <form class="space-y-6" @submit.prevent="register">
+        <!-- Start Name -->
+        <div>
+          <label
+            for="name"
+            class="block text-sm font-medium leading-6 text-gray-900"
+            >Name</label
+          >
+          <div class="mt-2">
+            <input
+              v-model="form.name"
+              id="name"
+              name="name"
+              type="text"
+              class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300
+               placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            />
+          </div>
+          <p class="mt-2 text-sm text-red-600" id="name-error">Error</p>
+        </div>
+        <!-- End Name Input -->
+       
+        <!-- Start Email Input -->
         <div>
           <label
             for="email"
@@ -45,6 +71,9 @@ const login = async () => {
           </div>
           <p class="mt-2 text-sm text-red-600" id="email-error">Error</p>
         </div>
+        <!-- End Email Input -->
+       
+       <!-- Start Password Input -->
         <div>
           <label
             for="password"
@@ -63,6 +92,29 @@ const login = async () => {
           </div>
           <p class="mt-2 text-sm text-red-600" id="email-error">Error</p>
         </div>
+        <!-- End Passord Input -->
+
+       <!-- Start Password ConfirmationInput -->
+        <div>
+          <label
+            for="password_confirmation"
+            class="block text-sm font-medium leading-6 text-gray-900"
+            >Password Confirmation</label
+          >
+          <div class="mt-2">
+            <input
+              v-model="form.password_confirmation"
+              id="password"
+              name="password_confirmation"
+              type="password"
+              class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300
+               placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            />
+          </div>
+          <p class="mt-2 text-sm text-red-600" id="email-error">Error</p>
+        </div>
+        <!-- End Passord Input -->
+        
         <div>
           <button
             type="submit"
@@ -70,16 +122,16 @@ const login = async () => {
              text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2
              focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
-            Sign in
+            Register
           </button>
         </div>
       </form>
       <p class="mt-10 text-center text-sm text-gray-500">
-        Not signed up?
+        Already Signed In?
         <NuxtLink
-          to="/auth/register"
+          to="#/auth/login"
           class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
-          >Register
+          >Login
         </NuxtLink>
       </p>
     </div>

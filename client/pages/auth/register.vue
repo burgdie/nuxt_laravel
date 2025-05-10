@@ -4,7 +4,7 @@
     title: "Register",
   })
 
-  const {register: registerAction} = useAuth();
+  const {register: registerAction, errors} = useAuth();
   const {refreshIdentity} = useSanctumAuth();
   
   const form = reactive<RegisterForm>({
@@ -16,6 +16,7 @@
 
   const register = async () => {
     await registerAction(form);
+    console.log(errors.value);
     await refreshIdentity();
     await navigateTo("/dashboard");
   };
@@ -48,9 +49,14 @@
               type="text"
               class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300
                placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+               :class="{
+                'text-red-900 focus:ring-red-500 focus:border-red-500 border-red-300':
+                errors.name,
+               }"
             />
           </div>
-          <p class="mt-2 text-sm text-red-600" id="name-error">Error</p>
+          <p v-if="errors.name"  class="mt-2 text-sm text-red-600" id="name-error">
+            {{ errors.name[0] }}</p>
         </div>
         <!-- End Name Input -->
        
@@ -69,9 +75,15 @@
               type="email"
               class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300
                placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-            />
+                :class="{
+                'text-red-900 focus:ring-red-500 focus:border-red-500 border-red-300':
+                errors.email,
+               }"
+            /> 
           </div>
-          <p class="mt-2 text-sm text-red-600" id="email-error">Error</p>
+          <p  v-if="errors.email" class="mt-2 text-sm text-red-600" id="email-error">
+            {{ errors.email[0] }}
+          </p>
         </div>
         <!-- End Email Input -->
        
@@ -90,9 +102,15 @@
               type="password"
               class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300
                placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                :class="{
+                'text-red-900 focus:ring-red-500 focus:border-red-500 border-red-300':
+                errors.password,
+               }"
             />
           </div>
-          <p class="mt-2 text-sm text-red-600" id="email-error">Error</p>
+          <p v-if="errors.password" class="mt-2 text-sm text-red-600" id="email-error">
+            
+            {{ errors.password[0] }}</p>
         </div>
         <!-- End Passord Input -->
 
@@ -106,16 +124,16 @@
           <div class="mt-2">
             <input
               v-model="form.password_confirmation"
-              id="password"
+              id="password_confirmation"
               name="password_confirmation"
               type="password"
               class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300
                placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             />
           </div>
-          <p class="mt-2 text-sm text-red-600" id="email-error">Error</p>
+        
         </div>
-        <!-- End Passord Input -->
+        <!-- End Passord confirmation Input -->
         
         <div>
           <button
@@ -131,7 +149,7 @@
       <p class="mt-10 text-center text-sm text-gray-500">
         Already Signed In?
         <NuxtLink
-          to="#/auth/login"
+          to="/auth/login"
           class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
           >Login
         </NuxtLink>

@@ -51,14 +51,10 @@ const logout = async() => {
         </button>
       </div>
       <div class="hidden lg:flex">
-        <div class="flex items-center space-x-6"
-          v-if="isAuthenticated" >
-          <div
-          
-            class="text-sm font-semibold leading-6 text-gray-900"
-          >
+        <div class="flex items-center space-x-6" v-if="isAuthenticated" >
+          <NuxtLink to="/account" class="text-sm font-semibold leading-6 text-gray-900">
             {{ user.name }}
-          </div>
+          </NuxtLink>
           <button @click="logout"   class="text-sm font-semibold leading-6 text-gray-900">
             Log out &rarr;
           </button>

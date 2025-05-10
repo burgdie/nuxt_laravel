@@ -20,6 +20,13 @@ declare global {
   }
  
 
+  interface ProfileForm {
+    name: string;
+    email: string;
+  
+  }
+ 
+
 
 
 }

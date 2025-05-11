@@ -5,14 +5,25 @@
   })
 
 
-const { login: loginAction } = useSanctumAuth();
+// const { login: loginAction } = useSanctumAuth();
+
+const { login: loginAction } = useAuth();
+
 const form = reactive<LoginForm>({
   email: "admin@admin.com",
   password: "password",
 });
 
 const login = async () => {
-  await loginAction(form);
+ const response = await loginAction(form);
+
+ if(response.two_factor){
+  await navigateTo('/two-factor-auth/challenge')
+
+ }else {
+  await navigateTo('dashboard');
+ }
+
 };
 </script>
 

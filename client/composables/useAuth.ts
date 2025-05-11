@@ -27,6 +27,31 @@ export const useAuth = () => {
   }
 
   /**
+   * Login Function
+   * 
+   */
+  async function login(form:LoginForm ) {
+
+    try {
+      return await sanctumFetch('/login', {
+        method: 'POST',
+        body: form
+
+      });
+
+    } catch(error:any) {
+        if(error.statusCode === 422) {
+          errors.value = error.data.errors;
+        }
+
+
+    }
+
+
+
+  }
+
+  /**
    * confirmPassword Function
    * @param form 
    * @returns 
@@ -40,6 +65,30 @@ export const useAuth = () => {
     });
 
     }catch (error:any){
+      if(error.statusCode == 422){
+        errors.value = error.data.errors;
+
+      };
+
+
+    }
+  }
+  /**
+   * confirmTwoFactor Function
+   * @param form 
+   * @returns 
+   */
+  async function confirmTwoFactor(form: CodeForm){
+    try {
+      await sanctumFetch.raw("/two-factor-challenge", {
+      method: "POST",
+      body: form,
+
+    });
+
+      return await refreshIdentity();
+
+    } catch (error:any){
       if(error.statusCode == 422){
         errors.value = error.data.errors;
 
@@ -97,6 +146,7 @@ export const useAuth = () => {
 
     }
   }
+
   /**
    * submitCode Function
    * @param form 
@@ -122,9 +172,11 @@ export const useAuth = () => {
     }
   }
 
-  return {register,errors, updateProfile,
-     confirmPassword, enableTwoFactor, submitCode};
+  return {  
+    register,errors, updateProfile,
+     confirmPassword, enableTwoFactor,
+      submitCode, login, confirmTwoFactor,
 
-}
+  };
 
-
+};

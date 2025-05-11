@@ -22,6 +22,8 @@ return [
          'register',
          'user/profile-information',  
          'user/confirm-password',
+         '/user/two-factor-authentication',
+         '/user/two-factor-qr-code',
         ],
 
     'allowed_methods' => ['*'],

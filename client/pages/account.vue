@@ -30,7 +30,27 @@
       >
         Update Profile
       </h2>
+      <!-- Start Enable Two Factor Authentication -->
+      <div class="rounded-md bg-blue-50 p-4 mt-8">
+        <div class="flex">
+          <div class="ml-3 flex-1 md:flex md:justify-between">
+            <p class="text-sm text-blue-700">
+              Two factor authentication is
+              <span v-if="user?.two_factor_enabled">enabled</span>
+              <span v-else >disabled</span>.
+            </p>
+            <p class="mt-3 text-sm md:ml-6 md:mt-0">
+               <NuxtLink class="whitespace-nowrap font-MediaKeyStatusMap text-blue-700 hover:text-blue-600">
+                {{ user?.two_factor_enabled ? 'Disable' : 'Enable' }} 
+                 <span aria-hidden="true"> &rarr;</span>
+              </NuxtLink>
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
+    <!-- End Two Factor Authentication -->
+    <!-- Start Account Form -->
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
       <form class="space-y-6" @submit.prevent="submit">
         <!-- Start Name -->
@@ -101,5 +121,6 @@
       </form>
     
     </div>
+    <!-- End Account Fform -->
   </div>
 </template>

@@ -19,6 +19,10 @@ declare global {
     password: string;
     password_confirmation: string
   }
+
+  interface ConfirmPasswordForm {
+    password: string;   
+  }
  
 
   interface ProfileForm {

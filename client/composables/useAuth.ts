@@ -2,6 +2,11 @@ export const useAuth = () => {
   const sanctumFetch = useSanctumClient(),
      errors = ref({});
 
+  /**
+   * Register Function
+   * @param form 
+   * @returns 
+   */
   async function register(form: RegisterForm){
     try {
       return await sanctumFetch("/register", {
@@ -20,6 +25,34 @@ export const useAuth = () => {
     }
   }
 
+  /**
+   * confirmPassword Function
+   * @param form 
+   * @returns 
+   */
+  async function confirmPassword(form: ConfirmPasswordForm){
+    try {
+      return await sanctumFetch("/user/confirm-password", {
+      method: "POST",
+      body: form,
+
+    });
+
+    }catch (error:any){
+      if(error.statusCode == 422){
+        errors.value = error.data.errors;
+
+      };
+
+
+    }
+  }
+
+  /**
+   * updateProfile Function
+   * @param form 
+   * @returns 
+   */
   async function updateProfile(form: ProfileForm){
     try {
       return await sanctumFetch("/user/profile-information", {
@@ -38,7 +71,7 @@ export const useAuth = () => {
     }
   }
 
-  return {register,errors, updateProfile};
+  return {register,errors, updateProfile, confirmPassword};
 
 }
 

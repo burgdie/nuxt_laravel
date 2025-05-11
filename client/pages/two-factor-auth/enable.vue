@@ -4,11 +4,15 @@
     title: "Enable Two Factor Authentication",
   })
 
-  const {confirmPassword, errors, enableTwoFactor} = useAuth();
+  const {confirmPassword, errors, enableTwoFactor, submitCode:submitCodeAction } = useAuth();
 
   let svg = reactive({
     qrCode: "",
-  })
+  });
+
+  const codeForm = reactive<CodeForm>({
+    code: "",
+  });
  
   
   const confirmPasswordForm = reactive<ConfirmPasswordForm>({
@@ -29,6 +33,12 @@
     
 
   };
+
+  const submitCode = async() => {
+    submitCodeAction(codeForm).then(async (response) => {
+      await navigateTo('/account');
+    });
+  }
 
 </script>
 
@@ -109,7 +119,7 @@
           <p class="py-1"> And enter the code below </p>
         </div>
         <!-- Form to enter the Code -->
-         <form class="space-y-6" @submit.prevent="submit">
+         <form class="space-y-6" @submit.prevent="submitCode">
           <div>
             <label
               for="code"
@@ -118,6 +128,7 @@
             >
             <div class="mt-2">
               <input
+                v-model="codeForm.code"
                 id="code"
                 name="code"
                 type="text"

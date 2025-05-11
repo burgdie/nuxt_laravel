@@ -30,6 +30,10 @@ declare global {
     email: string;
   
   }
+
+  interface CodeForm {
+    code: string;
+  }
  
 
 
